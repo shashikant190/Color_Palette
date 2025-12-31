@@ -14,9 +14,27 @@ export default function SidebarControls({
     <div style={{ marginTop: 18 }}>
       {/* Buttons */}
       <div style={{ display: "flex", gap: 8 }}>
-        <button onClick={randomPalette} className="soft-btn">Random</button>
-        <button onClick={copyCss} className="soft-btn">Copy CSS</button>
-        <button onClick={copyTailwind} className="soft-btn">Copy Tailwind</button>
+        <button
+          type="button"
+          onClick={randomPalette}
+          className="soft-btn soft-btn--primary"
+        >
+          Random
+        </button>
+        <button
+          type="button"
+          onClick={copyCss}
+          className="soft-btn soft-btn--outline"
+        >
+          Copy CSS
+        </button>
+        <button
+          type="button"
+          onClick={copyTailwind}
+          className="soft-btn soft-btn--ghost"
+        >
+          Copy Tailwind
+        </button>
       </div>
 
       {/* Palette */}
@@ -25,25 +43,25 @@ export default function SidebarControls({
 
         <div className="palette-list">
           {palette.map((p) => {
-
-            // fixed: always black text
-            const textColor = "#000000";
+            const isActive = p === selected;
 
             // calculate contrast vs white for info only
             const cr = contrastRatio(p, "#ffffff");
 
             return (
-              <div key={p} className="swatch" onClick={() => setSelected(p)}>
-                
+              <button
+                key={p}
+                type="button"
+                className={`swatch ${isActive ? "swatch--active" : ""}`}
+                onClick={() => setSelected(p)}
+              >
                 <div className="swatch-color" style={{ background: p }} />
 
-                {/* all text always black */}
-                <div className="swatch-meta" style={{ color: textColor }}>
+                <div className="swatch-meta">
                   <div className="swatch-hex">{p}</div>
                   <div className="swatch-contrast">{cr} :1</div>
                 </div>
-
-              </div>
+              </button>
             );
           })}
         </div>
